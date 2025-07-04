@@ -1,4 +1,4 @@
-<h2 align="left">Olá 👋! Meu nome é Alex2018-byte e estou construindo meu futuro como desenvolvedor.</h2>
+<h2 align="left">Olá 👋! Meu nome é Alex2018-byte e estou construindo meu futuro como desenvolvedor, do Brasil.</h2>
 
 ###
 
@@ -46,6 +46,6 @@
 
 <br clear="both">
 
-
+<img src="https://raw.githubusercontent.com/Alex2018-byte/Alex2018-byte/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 
 ###
