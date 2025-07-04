@@ -1,0 +1,35 @@
+name: generate animation
+
+on:
+  schedule:
+    - cron: "0 */24 * * *" # Roda automaticamente a cada 24 horas (meia-noite UTC)
+  workflow_dispatch: # Permite rodar manualmente a action a qualquer momento
+  push: # Roda em cada push na branch principal
+    branches:
+      - main # <--- ALTERADO PARA 'main'. Se a sua for 'master', mude de volta.
+
+jobs:
+  generate:
+    permissions:
+      contents: write # Permissão necessária para a action escrever no repositório
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 # Limite de tempo para a action rodar
+
+    steps:
+      # Gera a animação da cobrinha a partir do gráfico de contribuições do GitHub
+      - name: generate github-contribution-grid-snake.svg
+        uses: Platane/snk/svg-only@v3 # Usa a action Platane/snk para gerar o SVG
+        with:
+          github_user_name: ${{ github.repository_owner }} # Pega o seu nome de usuário automaticamente
+          outputs: | # Define os arquivos de saída
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+
+      # Envia o conteúdo gerado para uma branch específica (a 'output' neste caso)
+      - name: push github-contribution-grid-snake.svg to the output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0 # Action para deploy em GitHub Pages/Branches
+        with:
+          target_branch: output # A branch para onde a cobrinha será enviada
+          build_dir: dist # O diretório onde os arquivos gerados estão
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Token de acesso para a action
